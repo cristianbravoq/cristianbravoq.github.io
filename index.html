@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <title>Juego Promocion</title>
     <style>
       * {
@@ -36,15 +37,27 @@
       }
 
       .mediodia {
-        background: linear-gradient(180deg, rgba(252,160,48,1) 2%, rgba(137,213,253,1) 56%);
+        background: linear-gradient(
+          180deg,
+          rgba(252, 160, 48, 1) 2%,
+          rgba(137, 213, 253, 1) 56%
+        );
       }
 
       .tarde {
-        background: linear-gradient(180deg, rgba(89,138,153,1) 15%, #fda63c 100%);
+        background: linear-gradient(
+          180deg,
+          rgba(89, 138, 153, 1) 15%,
+          #fda63c 100%
+        );
       }
 
       .noche {
-        background: linear-gradient(180deg, rgba(62,92,101,1) 15%, rgba(89,138,153,1) 100%);
+        background: linear-gradient(
+          180deg,
+          rgba(62, 92, 101, 1) 15%,
+          rgba(89, 138, 153, 1) 100%
+        );
       }
 
       .dino {
@@ -155,20 +168,25 @@
     </style>
   </head>
   <body>
-    <div id="GameContenedor" class="contenedor mediodia">
-      <div class="suelo"></div>
+    <div >
+      <div id="GameContenedor" class="contenedor mediodia">
+        <div class="suelo"></div>
 
-      <div class="dino dino-corriendo"></div>
+        <div class="dino dino-corriendo"></div>
 
-      <div class="score">0</div>
+        <div class="score">0</div>
+      </div>
+      <button class="game-over" style="width: 240px" onclick="ResetGame()">
+        GAME OVER
+      </button>
+      <button id="Game" style="width: 240px">Saltar</button>
     </div>
-    <button class="game-over" style="width: 240px" onclick="ResetGame()">
-      GAME OVER
-    </button>
 
     <script>
       //****** GAME LOOP ********//
       var scene = document.querySelector(".contenedor");
+      var game = document.getElementById("Game");
+      var element = document.getElementById("GameContenedor");
       var time = new Date();
       var deltaTime = 0;
 
@@ -195,7 +213,6 @@
       }
 
       //****** GAME LOGIC ********//
-
       var sueloY = 55;
       var velY = 0;
       var impulso = 800;
@@ -247,7 +264,6 @@
           nubes.splice(i, 1);
         }
 
-        var element = document.getElementById("GameContenedor");
         element.classList.remove("tarde");
         element.classList.remove("noche");
 
@@ -278,6 +294,7 @@
         textoScore = document.querySelector(".score");
         dino = document.querySelector(".dino");
         document.addEventListener("keydown", HandleKeyDown);
+        document.addEventListener("click", HandleKeyDown);
       }
 
       function Update() {
@@ -295,6 +312,7 @@
       }
 
       function HandleKeyDown(ev) {
+        Saltar();
         if (ev.keyCode == 32) {
           Saltar();
         }
