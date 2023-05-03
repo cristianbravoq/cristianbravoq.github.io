@@ -22,10 +22,9 @@
       }
 
       .contenedor {
-        width: 920px;
+        width: 90vw;
         height: 280px;
         margin: 0 auto;
-
         position: relative;
         background-color: #89d5fd;
         /*background-color: linear-gradient(#b7d6c7, transition) #ffe2d1;linear-gradient(#90ebff, white);*/
@@ -168,7 +167,6 @@
     </style>
   </head>
   <body>
-    <div >
       <div id="GameContenedor" class="contenedor mediodia">
         <div class="suelo"></div>
 
@@ -179,13 +177,10 @@
       <button class="game-over" style="width: 240px" onclick="ResetGame()">
         GAME OVER
       </button>
-      <button id="Game" style="width: 240px">Saltar</button>
-    </div>
 
     <script>
       //****** GAME LOOP ********//
       var scene = document.querySelector(".contenedor");
-      var game = document.getElementById("Game");
       var element = document.getElementById("GameContenedor");
       var time = new Date();
       var deltaTime = 0;
