@@ -7,7 +7,7 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <title>Juego Promocion</title>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
+      @import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap");
 
       * {
         padding: 0;
@@ -25,6 +25,7 @@
 
       .contenedor {
         width: 90vw;
+        max-width: 920px;
         height: 280px;
         margin: 0 auto;
         position: relative;
@@ -155,12 +156,10 @@
         color: black;
         border: 1px solid #85797991;
         background: #857979b6;
-        font-family: 'Roboto Condensed', sans-serif;
+        font-family: "Roboto Condensed", sans-serif;
         font-size: 30px;
         font-weight: 700;
       }
-
-
 
       @keyframes animarDino {
         from {
@@ -171,29 +170,29 @@
         }
       }
 
-      .game-over > p, ul {
-        font-size: .6em;
+      .game-over > p,
+      ul {
+        font-size: 0.6em;
       }
 
       .game-over > button {
-        font-family: 'Roboto Condensed', sans-serif;
-        font-size: .6em;
-        border-radius: .3em;
+        font-family: "Roboto Condensed", sans-serif;
+        font-size: 0.6em;
+        border-radius: 0.3em;
         background: #5cc01457;
       }
       .game-over > button:hover {
         background: #c01414;
       }
       h3 {
-        font-size: .7em;
+        font-size: 0.7em;
       }
       .loser {
         width: 300px;
-        padding: .2em 0;
+        padding: 0.2em 0;
         border: 1px solid #85797991;
-        border-radius: .2em;
+        border-radius: 0.2em;
       }
-
     </style>
   </head>
   <body>
@@ -207,9 +206,12 @@
     <div class="game-over containerGameOver" style="width: 300px">
       <h3>¡FELICITACIONES GANASTE!</h3>
       <p>
-        Tienes un <strong id="CantidadGanador"></strong> puedes que puedes redimir con el
-        código <strong id="LabelGanador"></strong> Nuestro sitio web:
-        <a href="https://www.speedocolombia.com/">http://www.speedocolombia.com</a>
+        Tienes un <strong id="CantidadGanador"></strong> puedes que puedes
+        redimir con el código <strong id="LabelGanador"></strong> Nuestro sitio
+        web:
+        <a href="https://www.speedocolombia.com/"
+          >http://www.speedocolombia.com</a
+        >
       </p>
       <ul>
         <li>*Aplica solo en nuestra tienda Online.</li>
@@ -226,12 +228,11 @@
 
     <script>
       //****** GAME LOOP ********//
-      var scene = document.querySelector(".contenedor");
+      var time = new Date();
+      var deltaTime = 0;
       var element = document.getElementById("GameContenedor");
       var labelGanador = document.getElementById("LabelGanador");
       var cantidadGanador = document.getElementById("CantidadGanador");
-      var time = new Date();
-      var deltaTime = 0;
 
       if (
         document.readyState === "complete" ||
@@ -315,6 +316,8 @@
         dino.classList.add("dino-corriendo");
         dino.classList.remove("dino-estrellado");
         textoScore.innerText = score;
+
+        gameVel = 1;
 
         tiempoHastaObstaculo = 2;
         tiempoObstaculoMin = 0.7;
@@ -471,58 +474,55 @@
       function GanarPuntos() {
         score++;
         textoScore.innerText = score;
-        if (score == 5) {
-          gameVel = 1.5;
-        } else if (score == 15) {
-          gameVel = 2;
+        if (score == 5) gameVel = 1.2;
+        else if (score == 15) {
+          gameVel = 1.4;
           contenedor.classList.add("tarde");
-        } else if (score == 35) {
-          gameVel = 2.3;
-        } else if (score == 50) {
-          gameVel = 2.7;
+        } else if (score == 35) gameVel = 1.6;
+        else if (score == 50) {
+          gameVel = 1.8;
           contenedor.classList.add("noche");
-        } else if (score == 80) {
-          gameVel = 2.9;
-        }
+        } else if (score == 60) gameVel = 2;
+        else if (score == 80) gameVel = 2.2;
         suelo.style.animationDuration = 3 / gameVel + "s";
       }
 
       function GameOver() {
         Estrellarse();
-        var codigoDescuento = '';
-        var cantidaDescuento = '';
-        if(score < 10) {
-          codigoDescuento = 'No lograste ganar, intentalo de nuevo';
+        var codigoDescuento = "";
+        var cantidaDescuento = "";
+        if (score < 10) {
+          codigoDescuento = "No lograste ganar, intentalo de nuevo";
           gameOver.style.display = "none";
           gameOverLoser.style.display = "flex";
         }
-        if(score > 10) {
-          codigoDescuento = 'JNADADOR10';
-          cantidaDescuento = '10% Dcto';
+        if (score > 10) {
+          codigoDescuento = "JNADADOR10";
+          cantidaDescuento = "10% Dcto";
           gameOver.style.display = "flex";
           gameOverLoser.style.display = "none";
         }
-        if(score > 15) {
-          codigoDescuento = 'JNADADOR15';
-          cantidaDescuento = '15% Dcto';
+        if (score > 15) {
+          codigoDescuento = "JNADADOR15";
+          cantidaDescuento = "15% Dcto";
           gameOver.style.display = "flex";
           gameOverLoser.style.display = "none";
         }
-        if(score > 20) {
-          codigoDescuento = 'JNADADOR20';
-          cantidaDescuento = '20% Dcto';
+        if (score > 20) {
+          codigoDescuento = "JNADADOR20";
+          cantidaDescuento = "20% Dcto";
           gameOver.style.display = "flex";
           gameOverLoser.style.display = "none";
         }
-        if(score > 25) {
-          codigoDescuento = 'JNADADOR25';
-          cantidaDescuento = '25% Dcto';
+        if (score > 25) {
+          codigoDescuento = "JNADADOR25";
+          cantidaDescuento = "25% Dcto";
           gameOver.style.display = "flex";
           gameOverLoser.style.display = "none";
         }
-        if(score >30) {
-          codigoDescuento = 'JNADADOR30';
-          cantidaDescuento = '30% Dcto';
+        if (score > 30) {
+          codigoDescuento = "JNADADOR30";
+          cantidaDescuento = "30% Dcto";
           gameOver.style.display = "flex";
           gameOverLoser.style.display = "none";
         }
