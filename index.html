@@ -4,9 +4,11 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <title>Juego Promocion</title>
     <style>
+      @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
+
       * {
         padding: 0;
         margin: 0;
@@ -92,7 +94,7 @@
 
         background: url(imgOneill/Mar.png) repeat 0px 10px;
         background-position-y: 0 px;
-        background-size: 560% 42px;
+        background-size: 40% 42px;
         background-color: #63caf2;
         overflow-y: visible;
       }
@@ -147,14 +149,18 @@
         display: none;
 
         position: absolute;
-        width: 100%;
-
+        z-index: 100;
+        flex-direction: column;
         text-align: center;
-        color: #7e928b;
+        color: black;
+        border: 1px solid #85797991;
+        background: #857979b6;
+        font-family: 'Roboto Condensed', sans-serif;
         font-size: 30px;
-        font-family: Verdana;
         font-weight: 700;
       }
+
+
 
       @keyframes animarDino {
         from {
@@ -164,24 +170,66 @@
           background-position-x: -162px;
         }
       }
+
+      .game-over > p, ul {
+        font-size: .6em;
+      }
+
+      .game-over > button {
+        font-family: 'Roboto Condensed', sans-serif;
+        font-size: .6em;
+        border-radius: .3em;
+        background: #5cc01457;
+      }
+      .game-over > button:hover {
+        background: #c01414;
+      }
+      h3 {
+        font-size: .7em;
+      }
+      .loser {
+        width: 300px;
+        padding: .2em 0;
+        border: 1px solid #85797991;
+        border-radius: .2em;
+      }
+
     </style>
   </head>
   <body>
-      <div id="GameContenedor" class="contenedor mediodia">
-        <div class="suelo"></div>
+    <div id="GameContenedor" class="contenedor mediodia">
+      <div class="suelo"></div>
 
-        <div class="dino dino-corriendo"></div>
+      <div class="dino dino-corriendo"></div>
 
-        <div class="score">0</div>
-      </div>
-      <button class="game-over" style="width: 240px" onclick="ResetGame()">
-        GAME OVER
-      </button>
+      <div class="score">0</div>
+    </div>
+    <div class="game-over containerGameOver" style="width: 300px">
+      <h3>¡FELICITACIONES GANASTE!</h3>
+      <p>
+        Tienes un <strong id="CantidadGanador"></strong> puedes que puedes redimir con el
+        código <strong id="LabelGanador"></strong> Nuestro sitio web:
+        <a href="https://www.speedocolombia.com/">http://www.speedocolombia.com</a>
+      </p>
+      <ul>
+        <li>*Aplica solo en nuestra tienda Online.</li>
+        <li>*No acumulable con otras promociones</li>
+        <li>* Válido solo por el mes de mayo.</li>
+      </ul>
+      <p></p>
+      <button onclick="ResetGame()">RESET</button>
+    </div>
+    <div class="game-over loser">
+      Inténtalo de nuevo
+      <button onclick="ResetGame()">RESET</button>
+    </div>
 
     <script>
       //****** GAME LOOP ********//
       var scene = document.querySelector(".contenedor");
       var element = document.getElementById("GameContenedor");
+      var labelGanador = document.getElementById("LabelGanador");
+      var cantidadGanador = document.getElementById("CantidadGanador");
       var time = new Date();
       var deltaTime = 0;
 
@@ -263,11 +311,11 @@
         element.classList.remove("noche");
 
         gameOver.style.display = "none";
+        gameOverLoser.style.display = "none";
         dino.classList.add("dino-corriendo");
         dino.classList.remove("dino-estrellado");
         textoScore.innerText = score;
 
-        gameVel = 1;
         tiempoHastaObstaculo = 2;
         tiempoObstaculoMin = 0.7;
         tiempoObstaculoMax = 1.8;
@@ -285,6 +333,7 @@
 
       function Start() {
         gameOver = document.querySelector(".game-over");
+        gameOverLoser = document.querySelector(".loser");
         suelo = document.querySelector(".suelo");
         contenedor = document.querySelector(".contenedor");
         textoScore = document.querySelector(".score");
@@ -309,9 +358,6 @@
 
       function HandleKeyDown(ev) {
         Saltar();
-        if (ev.keyCode == 32) {
-          Saltar();
-        }
       }
 
       function Saltar() {
@@ -443,7 +489,45 @@
 
       function GameOver() {
         Estrellarse();
-        gameOver.style.display = "block";
+        var codigoDescuento = '';
+        var cantidaDescuento = '';
+        if(score < 10) {
+          codigoDescuento = 'No lograste ganar, intentalo de nuevo';
+          gameOver.style.display = "none";
+          gameOverLoser.style.display = "flex";
+        }
+        if(score > 10) {
+          codigoDescuento = 'JNADADOR10';
+          cantidaDescuento = '10% Dcto';
+          gameOver.style.display = "flex";
+          gameOverLoser.style.display = "none";
+        }
+        if(score > 15) {
+          codigoDescuento = 'JNADADOR15';
+          cantidaDescuento = '15% Dcto';
+          gameOver.style.display = "flex";
+          gameOverLoser.style.display = "none";
+        }
+        if(score > 20) {
+          codigoDescuento = 'JNADADOR20';
+          cantidaDescuento = '20% Dcto';
+          gameOver.style.display = "flex";
+          gameOverLoser.style.display = "none";
+        }
+        if(score > 25) {
+          codigoDescuento = 'JNADADOR25';
+          cantidaDescuento = '25% Dcto';
+          gameOver.style.display = "flex";
+          gameOverLoser.style.display = "none";
+        }
+        if(score >30) {
+          codigoDescuento = 'JNADADOR30';
+          cantidaDescuento = '30% Dcto';
+          gameOver.style.display = "flex";
+          gameOverLoser.style.display = "none";
+        }
+        labelGanador.innerText = codigoDescuento;
+        cantidadGanador.innerText = cantidaDescuento;
       }
 
       function DetectarColision() {
